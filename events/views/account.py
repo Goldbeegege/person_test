@@ -6,6 +6,7 @@ from rest_framework.response import Response
 import copy
 from events import models
 from events.form_models import event_forms
+from django.shortcuts import HttpResponse
 from events.auth.auth import Auth
 # Create your views here.
 
