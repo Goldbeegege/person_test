@@ -72,9 +72,9 @@ class HaveToDo(models.Model):
     )
 
     is_completed = models.SmallIntegerField(choices=complete_choices,default=1,verbose_name="是否完成")
-    reason = models.CharField(max_length=512,verbose_name="未完成原因")
+    reason = models.CharField(max_length=512,verbose_name="未完成原因",default="懒")
     completed_time = models.DateTimeField(null=True,blank=True,verbose_name="完成时间")
-    summary = models.TextField(verbose_name="总结")
+    summary = models.TextField(verbose_name="总结",null=True,blank=True)
 
     def __str__(self):
         return self.event

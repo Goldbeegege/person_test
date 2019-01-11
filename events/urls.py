@@ -8,4 +8,5 @@ from events.views import api
 
 urlpatterns = [
     url(r'^v1/lookupUser/$',api.lookup_user),
+    url(r'^v1/backup/$',api.BackUp.as_view()),
 ]

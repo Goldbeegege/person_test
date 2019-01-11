@@ -22,5 +22,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^register/$', account.Register.as_view()),
     url(r'^login/$', account.Login.as_view()),
+    url(r'^logout/$', account.logout),
     url(r'^api/', include(urls)),
 ]

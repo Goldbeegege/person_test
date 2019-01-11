@@ -4,6 +4,9 @@
 import uuid
 import time
 import hashlib
+from rest_framework.authentication import BaseAuthentication
+from rest_framework.exceptions import AuthenticationFailed
+from events import models
 """
 存放于auth相关的函数
 """
@@ -33,3 +36,18 @@ class Auth:
         new_pwd = ha.hexdigest()
         return new_pwd
 
+
+class ViewAuth(BaseAuthentication):
+    def authenticate(self, request):
+        ret = {"code": 2001, "error": "认证失败", "msg": "请先登陆后访问"}
+        token = request.query_params.get("token","")
+        if token:
+            user_id = request.session.get("user_id")
+            if not user_id:
+                raise AuthenticationFailed(ret)
+            try:
+                user = models.UserInfo.objects.filter(id=user_id,token__token=token).first()
+                return user_id,user.username
+            except Exception as e:
+                raise AuthenticationFailed(ret)
+        raise AuthenticationFailed(ret)
