@@ -14,14 +14,12 @@ class UserSerializer(ModelSerializer):
 class ToDoSerializer(ModelSerializer):
     user = serializers.CharField(source="user.username")
     type = serializers.CharField(source="type.title")
+    create_time = serializers.SerializerMethodField()
+
+    def get_create_time(self,obj):
+        return obj.create_time.strftime("%Y-%m-%d")
+
     class Meta:
         model = models.ToDo
-        fields = ["id","title","detail","create_time","user","type"]
+        fields = ["id","title","detail","create_time","user","type","is_completed","reason","summary"]
 
-
-class HaveToDoSerializer(ModelSerializer):
-    # user = serializers.CharField(source="user.username")
-    # type = serializers.CharField(source="type.title")
-    class Meta:
-        model = models.HaveToDo
-        fields = "__all__"

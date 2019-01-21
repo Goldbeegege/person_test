@@ -20,9 +20,9 @@ class MiddlewareMixin(object):
 
 class CorsMiddleWares(MiddlewareMixin):
     def process_response(self,request,response):
-        response["Access-Control-Allow-Origin"] = "http://127.0.0.1:8080"
         response["Access-Control-Allow-Credentials"] = "true"
+        response["Access-Control-Allow-Origin"] = "http://127.0.0.1:8080"
+        response["Access-Control-Allow-Methods"] = "DELETE"
         if request.method == "OPTIONS":
             response["Access-Control-Allow-Headers"] = "content-type"
-
         return response

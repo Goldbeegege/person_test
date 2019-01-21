@@ -12,6 +12,8 @@ from geetest import GeetestLib
 import json
 from utils.exceptions import BaseResponse
 from django.http import JsonResponse
+from rest_framework.parsers import JSONParser,FormParser
+from utils.formation import StringFormation
 # Create your views here.
 
 pc_geetest_id = "b46d1900d0a894591916ea94ea91bd2c"
@@ -24,7 +26,8 @@ class Register(APIView):
 
     def post(self,request,*args,**kwargs):
         ret = BaseResponse()
-        form = event_forms.UserForm(request.data)
+        data = StringFormation(request.data.keys()[0]).data
+        form = event_forms.UserForm(data)
         if form.is_valid():
             #验证成功后将用户信息写入session,创建新的token
             data = copy.deepcopy(form.cleaned_data)
@@ -33,9 +36,10 @@ class Register(APIView):
             user = models.UserInfo.objects.create(**data)
             ret.msg = "注册成功"
             token = Auth.token(user.username)
-            request.session["user"] = user.id
+            request.session["user_id"] = user.id
             request.session["username"] = user.username
             ret.username = user.username
+            ret.token = token
             models.Token.objects.create(user=user,token=token)
         else:
             ret.code = 1001
@@ -67,19 +71,20 @@ class Login(APIView):
 
     def post(self,request,*args,**kwargs):
         ret = BaseResponse()
+        data = StringFormation(request.data.keys()[0]).data
         gt = GeetestLib(pc_geetest_id, pc_geetest_key)
-        challenge = request.data.get(gt.FN_CHALLENGE, '')
-        validate = request.data.get(gt.FN_VALIDATE, '')
-        seccode = request.data.get(gt.FN_SECCODE, '')
-        user_id = request.data.get("user_id")
-        status = request.data.get("status")
+        challenge = data.get(gt.FN_CHALLENGE, '')
+        validate = data.get(gt.FN_VALIDATE, '')
+        seccode = data.get(gt.FN_SECCODE, '')
+        user_id = data.get("user_id")
+        status = data.get("status")
         if status:
             result = gt.success_validate(challenge, validate, seccode, user_id)
         else:
             result = gt.failback_validate(challenge, validate, seccode)
         if result:
-            username = request.data.get("username")
-            passwrod = Auth.encryption(request.data.get("password"))
+            username = data.get("username")
+            passwrod = Auth.encryption(data.get("password"))
             user = models.UserInfo.objects.filter(username=username,password=passwrod).first()
             if user:
                 token = Auth.token(user.username)

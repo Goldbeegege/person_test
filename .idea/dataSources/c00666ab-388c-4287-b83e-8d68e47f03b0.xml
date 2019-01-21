@@ -21,7 +21,7 @@
     <table id="13" parent="2" name="django_content_type"/>
     <table id="14" parent="2" name="django_migrations"/>
     <table id="15" parent="2" name="django_session"/>
-    <table id="16" parent="2" name="events_havetodo"/>
+    <table id="16" parent="2" name="events_history"/>
     <table id="17" parent="2" name="events_todo"/>
     <table id="18" parent="2" name="events_token"/>
     <table id="19" parent="2" name="events_type"/>
@@ -446,47 +446,44 @@ model</ColNames>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="107" parent="16" name="is_completed">
+    <column id="107" parent="16" name="event_name">
       <Position>2</Position>
+      <DataType>varchar(64)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="108" parent="16" name="is_completed">
+      <Position>3</Position>
       <DataType>smallint|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="108" parent="16" name="reason">
-      <Position>3</Position>
-      <DataType>varchar(512)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="109" parent="16" name="completed_time">
+    <column id="109" parent="16" name="reason">
       <Position>4</Position>
+      <DataType>varchar(512)|0s</DataType>
+    </column>
+    <column id="110" parent="16" name="completed_time">
+      <Position>5</Position>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="110" parent="16" name="summary">
-      <Position>5</Position>
-      <DataType>text|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="111" parent="16" name="event_id">
+    <column id="111" parent="16" name="summary">
       <Position>6</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="112" parent="16" name="user_id">
+      <Position>7</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="112" parent="16" name="sqlite_autoindex_events_havetodo_1">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>event_id</ColNames>
+    <index id="113" parent="16" name="events_history_user_id_ec289aae">
+      <ColNames>user_id</ColNames>
       <ColumnCollations></ColumnCollations>
-      <Unique>1</Unique>
     </index>
-    <key id="113" parent="16">
+    <key id="114" parent="16">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="114" parent="16">
-      <ColNames>event_id</ColNames>
-      <UnderlyingIndexName>sqlite_autoindex_events_havetodo_1</UnderlyingIndexName>
-    </key>
     <foreign-key id="115" parent="16">
-      <ColNames>event_id</ColNames>
-      <RefTableName>events_todo</RefTableName>
+      <ColNames>user_id</ColNames>
+      <RefTableName>events_userinfo</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
     <column id="116" parent="17" name="id">

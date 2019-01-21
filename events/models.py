@@ -45,6 +45,14 @@ class ToDo(models.Model):
     create_time = models.DateTimeField(auto_now_add=True,verbose_name="创建时间")
     user = models.ForeignKey("UserInfo",verbose_name="用户")
     type = models.ForeignKey("Type",verbose_name="事件类型")
+    complete_choices = (
+        (0, "完成"),
+        (1, "未完成")
+    )
+
+    is_completed = models.SmallIntegerField(choices=complete_choices, default=1, verbose_name="是否完成")
+    reason = models.CharField(max_length=512, verbose_name="未完成原因", blank=True, null=True)
+    summary = models.TextField(verbose_name="总结", null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -60,23 +68,24 @@ class Type(models.Model):
         return self.title
 
 
-class HaveToDo(models.Model):
+class History(models.Model):
     """
-    今日需做事件
+    事件的历史记录
     """
 
-    event = models.OneToOneField("ToDo")
+    event_name = models.CharField(max_length=64,verbose_name="事件名称")
+    user = models.ForeignKey("UserInfo")
     complete_choices = (
         (0,"完成"),
         (1,"未完成")
     )
 
     is_completed = models.SmallIntegerField(choices=complete_choices,default=1,verbose_name="是否完成")
-    reason = models.CharField(max_length=512,verbose_name="未完成原因",default="懒")
+    reason = models.CharField(max_length=512,verbose_name="未完成原因",blank=True,null=True)
     completed_time = models.DateTimeField(null=True,blank=True,verbose_name="完成时间")
     summary = models.TextField(verbose_name="总结",null=True,blank=True)
 
     def __str__(self):
-        return self.event
+        return self.event_name
 
 
