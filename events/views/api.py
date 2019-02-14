@@ -57,10 +57,10 @@ class TodayEventView(ViewSetMixin,APIView):
             "reason":data.get("uncompleted_reason"),
             "completed_time":datetime.datetime.utcnow(),
             "summary":data.get("summary"),
-            "is_completed":0 if data.get("is_done") else 1,
-            "user_id":request.user
+            "is_completed":0 if data.get("is_completed") else 1,
+            "user_id":request.user,
+            "type":data.get("type")
         }
-
         try:
             models.History.objects.create(**data_dict)
             models.ToDo.objects.filter(id=data.get("id")).delete()
@@ -110,7 +110,7 @@ class BackUpEventView(ViewSetMixin,APIView):
             BASEEXC.msg = "创建失败"
         return Response(BASEEXC.response_dict)
 
-    def distory(self,request,*args,**kwargs):
+    def distory(self, request, *args, **kwargs):
         try:
             nid = request.data.get("id")
             models.ToDo.objects.filter(id=nid).delete()
@@ -120,6 +120,19 @@ class BackUpEventView(ViewSetMixin,APIView):
             BASEEXC.msg = "删除失败"
             BASEEXC.error = e
         return Response(BASEEXC.response_dict)
+
+class History(ViewSetMixin, APIView):
+    authentication_classes = [ViewAuth]
+
+    """
+    查询用户的历史记录，根据参数finish与unfinish来区分是否完成
+    """
+
+    def list(self, request, *args, **kwargs):
+        is_completed = request.query_params.get("is_completed")
+        history = models.History.objects.filter(user_id=request.user,is_completed=is_completed).all()
+        ser = event_serializers.HistorySerializer(instance=history, many=True)
+        return Response(ser.data)
 
 
 class TypeView(ViewSetMixin,APIView):

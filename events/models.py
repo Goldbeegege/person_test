@@ -79,7 +79,7 @@ class History(models.Model):
         (0,"完成"),
         (1,"未完成")
     )
-
+    type = models.ForeignKey(Type,null=True,blank=True)
     is_completed = models.SmallIntegerField(choices=complete_choices,default=1,verbose_name="是否完成")
     reason = models.CharField(max_length=512,verbose_name="未完成原因",blank=True,null=True)
     completed_time = models.DateTimeField(null=True,blank=True,verbose_name="完成时间")
