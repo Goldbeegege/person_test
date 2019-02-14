@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^v1/completion/(?P<id>\d+)/$',api.TodayEventView.as_view({"get":"retrieve"})),
     url(r'^v1/backup/$',api.BackUpEventView.as_view({"get":"list","post":"create","delete":"distory"})),
     url(r'^v1/type_list/$',api.TypeView.as_view({"get":"list","post":"create",})),
+    url(r'^v1/history/$',api.History.as_view({"get":"list"})),
 ]

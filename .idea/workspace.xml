@@ -98,7 +98,11 @@
     <session id="-1226680513">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+<<<<<<< HEAD
           <entry key="project.closed" value="5" />
+=======
+          <entry key="project.closed" value="4" />
+>>>>>>> dev
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.4" value="3" />
           <entry key="project.open.time.5" value="1" />
@@ -146,7 +150,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/events/serializers/event_serializers.py">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="266">
+=======
+            <state relative-caret-position="75">
+>>>>>>> dev
               <caret line="16" column="56" selection-start-line="16" selection-start-column="56" selection-end-line="16" selection-end-column="56" />
             </state>
           </provider>
@@ -332,7 +340,11 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3289689" />
+<<<<<<< HEAD
       <window_info anchor="bottom" id="Run" order="2" weight="0.32790446" />
+=======
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32790446" />
+>>>>>>> dev
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -533,7 +545,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/events/serializers/event_serializers.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="266">
+=======
+        <state relative-caret-position="75">
+>>>>>>> dev
           <caret line="16" column="56" selection-start-line="16" selection-start-column="56" selection-end-line="16" selection-end-column="56" />
         </state>
       </provider>
